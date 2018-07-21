@@ -1,0 +1,40 @@
+version: '3.3'
+services:
+  coredns:
+    container_name: coredns
+    image: mycoredns 
+    build:
+      context: ./example/coredns/
+      dockerfile: Dockerfile
+    ports:
+    - "5300:53"
+    - "5300:53/udp"
+    working_dir: "/"
+    volumes:
+    - dnsvolume:/dns/
+    links:
+    - dnsboi
+  dnsboi:
+    container_name: dnsboi
+    image: dnsboi
+    build:
+      context: ./src/dnsboi/
+      dockerfile: Dockerfile
+    working_dir: "/dns"
+    volumes:
+    - dnsvolume:/dns/
+    links:
+    - example
+    ports:
+    - "3353:3353"
+    environment:
+    - PORT=:3353
+  example:
+    container_name: example_app
+    image: node
+    command: node /app/index.js
+    volumes:
+    - ./example/app/:/app/
+
+volumes:
+  dnsvolume: {}

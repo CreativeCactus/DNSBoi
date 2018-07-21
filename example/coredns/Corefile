@@ -1,0 +1,23 @@
+example.org {
+    file            /www.example.org.dnszone
+}
+
+. {
+    auto {
+        directory       /dns/
+
+        # Load from /zones, look for file names as www.db.*, where * is origin. Scan every 45 seconds.
+        # directory /zones www\.db\.(.*) {1} 45
+    }
+    prometheus
+    errors
+    log
+}
+
+net {
+    proxy . 8.8.8.8:53 {
+    }
+    prometheus
+    errors
+    log
+}
