@@ -1,2 +1,2 @@
-FROM coredns/coredns
-COPY ./ /
+FROM    coredns/coredns
+COPY    ./ /

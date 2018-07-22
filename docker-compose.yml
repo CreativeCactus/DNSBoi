@@ -29,12 +29,13 @@ services:
     - "3353:3353"
     environment:
     - PORT=:3353
+    - ZONEFILE=/dns/zones
   example:
     container_name: example_app
-    image: node
-    command: node /app/index.js
-    volumes:
-    - ./example/app/:/app/
+    image: dns_example_app
+    build:
+      context: ./example/app/
+      dockerfile: Dockerfile
 
 volumes:
   dnsvolume: {}
