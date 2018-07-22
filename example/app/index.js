@@ -11,6 +11,8 @@ app.get('/health', (req,res)=>{
     res.send("I am well :)")
 })
 
+const resolver = new dns.promises.Resolver();
+
 main()
 async function main(){
     /* Wait for service */
@@ -33,12 +35,11 @@ async function main(){
         const I = setInterval(async ()=>{
             try {
                 console.log(`Searching for CoreDNS IP...`)
-                const resolver = new dns.promises.Resolver();
                 const coreDNSIP = `${await resolver.resolve4('coredns')}`
                 console.log(`Found CoreDNS at ${coreDNSIP}...`)
                 resolver.setServers([coreDNSIP]);
                 clearInterval(I)
-                return a(res.data)
+                return a(coreDNSIP)
             } catch (e) {
                 console.error(e)
             }
