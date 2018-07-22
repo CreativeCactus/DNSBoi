@@ -207,7 +207,7 @@ func (A *App) WriteZones() string {
 
 	zones := fmt.Sprintf(`$ORIGIN example.net.
 @	3600 IN	SOA sns.dns.icann.org. noc.dns.icann.org. (
-				%010d ; serial
+				%s ; serial
 				7200       ; refresh (2 hours)
 				3600       ; retry (1 hour)
 				1209600    ; expire (2 weeks)
